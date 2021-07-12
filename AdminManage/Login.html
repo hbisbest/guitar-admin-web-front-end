@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>吉他网站后台</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../css/font.css" />
+    <link rel="stylesheet" href="../css/weadmin.css" />
+    <style>
+        .txtVCode{
+            width: 200px;
+        }
+        .vcode-img{
+            width: 120px;
+            height: 50px;
+            margin-left: 13px;
+            /* border-style: solid;
+            border-width: 1px; */
+            /* margin-right: 10px; */
+            position: absolute;
+            right: 0px;
+        }
+    </style>
+</head>
+<body class="login-bg">
+    <div class="login">
+        <div class="message">GuitarAdmin 1.0 - 管理登录</div>
+        <div id="darkbannerwrap"></div>
+        <!--此处method为POST时进行window.location.href跳转时发生HTTP的405返回码错误，原因是测试时跳转的是本地的页面，而POST请求静态资源时会-->
+        <!--form表单标签内必须加上class="layui-form"，然后js部分加载form模块，两者缺一不可，不然layui的表单元素会有问题-->
+        <!--form表单标签内加上class="layui-form"后一切工作（指的是表单元素的渲染）都会在加载完form模块后自动完成-->
+        <form method="GET" class="layui-form" onsubmit="return false;">
+            <input name="username" placeholder="请输入用户名"  type="text" lay-verify="required" class="layui-input" />
+            <hr class="hr15" />
+            <input name="password" lay-verify="required" placeholder="请输入密码"  type="password" class="layui-input" />
+            <hr class="hr15" />
+            <div style="width: 340px;position: relative;">
+                <input name="vcode" class="txtVCode" placeholder="请输入验证码" type="text" lay-verify="required" class="layui-input" />
+                <img src="../img/vcodetest.jpg" class="vcode-img" alt="验证码图片"></img>
+            </div>
+            <hr class="hr20" />
+            <div>
+                <input type="checkbox" class="checkbox-rememberme" name="" title="一周内自动登录" lay-skin="primary" checked>
+            </div>
+            <hr class="hr20" />
+            <input id="btnLogin" class="loginin" value="登录" lay-submit lay-filter="login" style="width:100%;" type="submit" />
+            <hr class="hr10" />
+            <div>
+                <a style="color: #009688;" id="btnRegister">立即注册</a>
+                <a style="color: #009688;float: right;" id="btnForgetPwd">忘记密码？</a>
+            </div>
+        </form>
+    </div>
+    <script src="../js/plugins/layui/layui.js" charset="utf-8"></script>
+    <script src="../js/jquery-3.5.1.min.js"></script>
+    <script>
+        //如果不加载form模块，select、checkbox、radio等将无法显示，并且无法使用form相关功能
+        layui.use('form',function(){
+            var form = layui.form;
+            //各种基于事件的操作
+        })
+
+		$(function(){
+                $('#btnLogin').click(function(){
+                    window.location.href = './List.html';
+                })
+            })
+    </script>
+</body>
+</html>

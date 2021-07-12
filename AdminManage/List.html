@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link rel="stylesheet" href="../js/plugins/layui/css/layui.css" media="all">
+	<link rel="stylesheet" href="../css/public.css">
+	<title>管理员管理列表</title>
+</head>
+
+<body>
+	<div class="list-main">
+		<div class="list-nav">
+			<span class="layui-breadcrumb" style="visibility: visible;">
+				<!--导航中每项之间的斜杠是由引入的“element”模块完成的-->
+				<a>基础管理</a>
+				<a><cite>管理员列表</cite></a>
+			</span>
+			<a class="layui-btn layui-btn-sm" href="javascript:location.replace(location.href);" title="刷新"
+				style="float: right;margin-top: 3px"><i class="layui-icon layui-icon-refresh-3"></i></a>
+		</div>
+		<div class="list-main-content">
+			<div class="layui-form">
+				<form class="layui-form">
+					<div class="layui-form-item search-row">
+						<div class="layui-inline">
+							<label class="search-label">用户名</label>
+							<div class="search-input">
+								<input type="text" name="txtUserName" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class="search-label">昵称</label>
+							<div class="search-input">
+								<input type="text" name="txtNickName" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class="search-label">启用状态</label>
+							<div class="search-input">
+								<select name="state">
+									<option value=""></option>
+									<option value="0">启用</option>
+									<option value="1">未启用</option>
+								</select>
+							</div>
+						</div>
+						<div class="layui-inline">
+							<button class="layui-btn" lay-submit lay-filter="search"><i class="layui-icon">&#xe615;</i>查询</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<table class="layui-hide" id="tbAdminList" lay-filter="test"></table>
+		<!-- <div id="tbPager"></div> -->
+		<!--
+        	作者：981145308@qq.com
+        	时间：2020-03-30
+        	描述：表头按钮（列表外）
+        -->
+		<script type="text/html" id="toolbarOutSide">
+			<div class="layui-btn-container">
+				<button class="layui-btn layui-btn-sm" lay-event="addAdmin">添加</button>
+				<button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delSelect">删除所选</button>
+			</div>
+		</script>
+		<!--
+        	作者：981145308@qq.com
+        	时间：2020-03-30
+        	描述：表内操作按钮（列表内）
+        -->
+		<script type="text/html" id="toolbarInSide">
+			<a class="layui-btn layui-btn-xs btn-detail" lay-event="detail"><i class="layui-icon">&#xe60a;</i>查看</a>
+			<a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon">&#xe642;</i>编辑</a>
+			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon">&#xe640;</i>删除</a>
+		</script>
+		<!--
+        	作者：981145308@qq.com
+        	时间：2020-03-30
+        	描述：表内启用状态复选框
+		-->
+		<script type="text/html" id="switchTpl">
+			<input type="checkbox" name="sex" value="{{d.Status}}" lay-skin="switch" lay-text="是|否" lay-filter="sexDemo"
+				{{ d.Sex ? "checked" : "" }}>
+		</script>
+		<!-- <script type="text/html" id="checkboxTpl">
+		<input type="checkbox" name="status" title="启用" value="{{d.Status}}" lay-filter="statusFilter"
+			{{d.Status == true ? "checked" : ""}} />
+		</script> -->
+	</div>
+
+	<script src="../Plugin/layui/layui.js" charset="UTF-8"></script>
+
+	<script>
+		layui.use(['element', 'table', 'layer', 'form', 'laypage'], function () {
+			var table = layui.table;
+			var layer = layui.layer;
+			var form = layui.form;
+			var laypage = layui.laypage;
+			//var $ = layui.jquery;
+
+			//分页
+			// var myPager = laypage.render({
+			// 	elem: 'tbPager',
+			// 	count: 12,
+			// 	limit: 10,
+			// 	limits: [10,15,20,25,30],
+			// 	layout: ['count','prev','page','next','limit','refresh','skip'],
+			// 	jump: function(obj, first){	//当分页被切换时触发，obj(当前分页的所有选项值)，first(是否首次，一般用于初始加载的判断)
+			// 		// layer.msg("当前页：" + obj.curr);
+			// 		// layer.msg("页容量：" + obj.limit);
+
+			// 		// if(first){
+			// 		// 	layer.msg("现在是初始加载");
+			// 		// }
+
+			// 		layer.msg("页面跳转");
+			// 	}
+			// });
+
+			//加载表格模块
+			table.render({
+				elem: '#tbAdminList',
+				url: 'http://127.0.0.1:8099/', //todo:数据接口（示例是json数据，其他数据可以吗）
+				toolbar: '#toolbarOutSide', //开启头部工具栏，并为其绑定左侧模板
+				defaultToolbar: ['filter', 'exports', 'print'], //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+				title: '管理员列表',
+				loading: true,
+				cols: [
+					[ //表格列名
+						{
+							type: 'numbers'
+						},
+						{
+							type: 'checkbox'
+						},
+						{
+							field: 'AdminId',
+							title: 'ID',
+							width: 60,
+							sort: true
+						},
+						{
+							field: 'LoginName',
+							title: '用户名'
+						},
+						{
+							field: 'NickName',
+							title: '昵称'
+						},
+						{
+							field: 'RealName',
+							title: '真实姓名'
+						},
+						{
+							field: 'Email',
+							title: '邮箱',
+							templet: function (res) {
+								return '<em>' + res.Email + '</em>'
+							}
+						},
+						{
+							field: 'Sex',
+							title: '性别',
+							templet: function (res) {
+								var sexMsg = res.Sex == 0 ? '女' : '男';
+								return sexMsg;
+							},
+							width: 60
+						},
+						{
+							field: 'Creator',
+							title: '创建人',
+							width: 80
+						},
+						{
+							field: 'AddTime',
+							title: '添加时间',
+							sort: true
+						},
+						{
+							field: 'RecentUpdateTime',
+							title: '最近更新时间',
+							sort: true
+						},
+						{
+							field: 'Status',
+							title: '是否启用',
+							templet: '#switchTpl',
+							width: 80,
+							unresize: true
+						},
+						{
+							fixed: 'right',
+							title: '操作',
+							toolbar: '#toolbarInSide',
+							align: 'center'
+						}
+					]
+				],
+				page: true, //开启分页
+				request: {
+					limitName: 'size' //每页数据量的参数名，默认：limit
+				},
+				id: 'tbAdminId'
+			});
+
+			//自适应重置表格尺寸
+			//table.resize('tbAdminId');
+
+			//表头工具栏事件
+			table.on('toolbar(test)', function (obj) {
+				var checkStatus = table.checkStatus(obj.config.id);
+				switch (obj.event) {
+					case 'addAdmin':
+						layer.msg('添加管理员');
+						break;
+					case 'delSelect':
+						var data = checkStatus.data;
+						layer.msg('删除所选:' + data.length + '个');
+						break;
+					case 'LAYTABLE_TIPS':
+						layer.msg('这是工具栏右侧自定义的一个图标按钮');
+						break;
+				};
+			});
+
+			//监听表内按钮操作事件
+			table.on('tool(test)', function (obj) {
+				var data = obj.data;
+				if (obj.event === 'detail') {
+					layer.open({
+						type: 2,	//弹层类型，0（信息框，默认）1（页面层）2（iframe层）3（加载层）4（tips层）
+						title: ['管理员详情', 'font-size:18px'],
+						content: 'https://www.baidu.com',	//发现直接用一段完整的html页面字符串会出现错误
+						skin: 'layui-layer-molv',
+						area: ['600px', '450px'],	//设置弹框的宽高
+						offset: 'auto',	//弹框位置坐标，auto是默认值，即垂直水平居中
+						shade: 0,	//不显示弹层外区域
+						shadeClose: true,	//点击弹层外区域关闭弹层（官网文档说shade存在才起效，不知道shade值为0是否起效）
+						maxmin: true,	//显示弹层最大最小化按钮，默认不显示
+						fixed: true,	//即鼠标滚动时，层是否固定在可视区域。默认true
+						resize: true,	//拖动弹层来拉伸尺寸，默认true
+						scrollbar: true	//浏览器滚动，默认true
+					});
+				} else if (obj.event === 'edit') {
+					//todo:开发编辑页
+					window.location.href = 'Edit.html';
+				} else if (obj.event === 'del') {
+					layer.confirm('确定要删除该条数据吗？', function (index) {
+						//todo:调用删除接口并重置表格
+						layer.msg('删除数据项：' + index);
+					});
+				}
+			});
+
+			//监听启用操作
+			form.on('switch(sexDemo)', function (obj) {
+				layer.msg('点击启用');
+			});
+		});
+	</script>
+</body>
+
+</html>

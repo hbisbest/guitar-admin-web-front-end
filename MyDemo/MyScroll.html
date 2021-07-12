@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .test {
+        height: 300px;
+        width: 300px;
+        overflow-y: auto;
+      }
+      .child-div {
+        height: 500px;
+        width: 100%;
+        background-color:blanchedalmond;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="test">
+      <div class="child-div"></div>
+    </div>
+    <script src="../js/jquery-3.5.1.min.js"></script>
+    <script src="../js/plugins/jquery.nicescroll-3.7.6/js/jquery.nicescroll.min.js"></script>
+    <script>
+      // 设置统一滚动条
+    //   $(document).ready(function () {
+    //     $("html").niceScroll({
+    //       cursorborder: "",
+    //       cursorcolor: "#53a9ff", //
+    //       boxzoom: false,
+    //       enabletranslate3d: false,
+    //       horizrailenabled: false,
+    //     });
+    //   });
+
+      $(function(){
+          $(".test").niceScroll({
+          cursorborder: "",
+          cursorcolor: "#53a9ff", //
+          boxzoom: false,
+          enabletranslate3d: false,
+          horizrailenabled: false,
+        });
+      })
+    </script>
+  </body>
+</html>

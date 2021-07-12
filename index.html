@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <!--name="renderer"属性用于告诉浏览器以哪种浏览器内核浏览当前网站，浏览器就会在读取到这个属性后，会立马切换到对应的模式-->
+    <!--content的取值主要有三种浏览器内核：webkit（使用的webkit内核，属于极速模式，常用于网站的高速浏览，网站打开速度快，但某些网站在极速模式下可能出现兼容性问题，显示不正常）、
+			ie-comp（使用IE兼容模式，就是用IE6，IE7，IE8的渲染模式，网站打开速度比极速模式略低，但网页兼容性问题较少，常用于网银、交易支付、旧版网站）、ie-stand（属于IE标准模式，网站会使用IE9及以上版本的渲染方式渲染，支持硬件加速、支持IE9及以上版本全新的脚本渲染引擎）-->
+    <meta name="renderer" content="webkit" />
+    <!--这是针对ie8以上浏览器的一个属性，ie8以下无法识别。ie8以上浏览器遇到这个属性会执行content的描述，大小写不敏感。IE=edge表示以最高级别的可用模式显示内容，ie7支持最高ie7，ie8支持最高ie8，也支持8以下的，但以最高支持的模式使用-->
+    <!--像下面的IE=edge,chrome=1表示如果IE安装了Google Chrome Frame则使用谷歌浏览器内核模式，否则使用最新的IE模式。如果不指定IE=edge时，当用户浏览器没有chrome内核时，会弹出提示框，提醒用户安装该内核-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <!--如果请求的url是静态的html页面，则需要在页面中添加meta标签代码-->
+    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+    <!--width为可视区域的宽度，值可以为数字或关键词device-width。initial-scale表示页面首次被显式时可视区域的缩放级别，取值1.0则页面按实际尺寸显式，无任何缩放。maximum-scale和minimum-scale表示可视区域的最大最小缩放级别-->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+    <!--控制苹果手机状态栏显示样式-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <!--删除默认的苹果工具栏和菜单栏，content有两个值“yes”和“no”，当我们需要显示工具栏和菜单栏时，这个meta就不用加了，默认就是显示-->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!--当该 HTML 页面在手机上浏览时，该标签用于指定是否将网页内容中的手机号码显示为拨号的超链接。telephone=no表示不显示为拨号的超链接-->
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="icon" href="favicon.ico" />
+    <link rel="stylesheet" href="js/plugins/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="css/index.css" media="all" />
+    <title>BestGuitarAdminWeb</title>
+  </head>
+  <body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+      <div class="layui-header">
+        <div class="layui-logo">GuitarAdmin</div>
+        <div class="nav-hidden">
+          <i
+            title="展开左侧菜单"
+            id="showSide"
+            class="layui-icon layui-icon-shrink-right"
+          ></i>
+        </div>
+        <!-- <a
+          class="hidden-menu"
+          href="javascript:;"
+          style="color: #ffffff; font-size: 16px; line-height: 60px"
+          ><i id="showSide" class="layui-icon layui-icon-shrink-right"></i
+        ></a> -->
+        <ul class="layui-nav layui-layout-right">
+          <li class="layui-nav-item">
+            <a href="javascript:;">
+              <i
+                class="layui-icon layui-icon-speaker"
+                style="font-size: 16px; font-weight: 500"
+              ></i
+              ><span style="padding-left: 5px; font-size: 16px">系统公告</span>
+            </a>
+          </li>
+          <li class="layui-nav-item">
+            <a href="javascript:;">
+              <i
+                class="layui-icon layui-icon-theme"
+                style="font-size: 16px; font-weight: 500"
+              ></i
+              ><span style="padding-left: 5px; font-size: 16px">更换主题</span>
+            </a>
+            <dl class="layui-nav-child">
+              <dd>
+                <a
+                  href="javascript:;"
+                  class="theme-change"
+                  skin="index-black-theme"
+                  >低调黑</a
+                >
+              </dd>
+              <dd>
+                <a
+                  href="javascript:;"
+                  class="theme-change"
+                  skin="index-blue-theme"
+                  >海洋蓝</a
+                >
+              </dd>
+              <dd>
+                <a
+                  href="javascript:;"
+                  class="theme-change"
+                  skin="index-green-theme"
+                  >森林绿</a
+                >
+              </dd>
+            </dl>
+          </li>
+          <li class="layui-nav-item">
+            <a href="javascript:;" style="font-size: 16px">
+              <img src="http://t.cn/RCzsdCq" class="layui-nav-img" />胡斌
+            </a>
+            <dl class="layui-nav-child">
+              <dd>
+                <a href=""
+                  ><i
+                    class="layui-icon layui-icon-username"
+                    style="font-size: 16px; font-weight: 500"
+                  ></i
+                  ><span style="font-size: 15px; padding-left: 5px"
+                    >个人中心</span
+                  ></a
+                >
+              </dd>
+              <dd>
+                <a href=""
+                  ><i
+                    class="layui-icon layui-icon-edit"
+                    style="font-size: 16px; font-weight: 500"
+                  ></i
+                  ><span style="font-size: 15px; padding-left: 5px"
+                    >修改密码</span
+                  ></a
+                >
+              </dd>
+              <dd>
+                <a href=""
+                  ><i
+                    class="layui-icon layui-icon-face-smile-b"
+                    style="font-size: 16px; font-weight: 500"
+                  ></i
+                  ><span style="font-size: 15px; padding-left: 5px"
+                    >更换头像</span
+                  ></a
+                >
+              </dd>
+              <dd>
+                <a href=""
+                  ><i
+                    class="layui-icon layui-icon-logout"
+                    style="font-size: 16px; font-weight: 500"
+                  ></i
+                  ><span style="font-size: 15px; padding-left: 5px"
+                    >退出登录</span
+                  ></a
+                >
+              </dd>
+            </dl>
+          </li>
+        </ul>
+        <div class="layui-form search-box">
+          <!-- <select
+            name="modules"
+            lay-verify="required"
+            lay-search=""
+            lay-filter="search-box"
+          >
+            <option value="">搜索组件或模块</option>
+            <option value="">搜索结果一</option>
+            <option value="">搜索结果二</option>
+          </select> -->
+          <input
+            type="text"
+            placeholder="请输入搜索内容"
+            autocomplete="off"
+            id="searchInput"
+            class="layui-input"
+          />
+          <i
+            id="searchIcon"
+            class="layui-icon layui-icon-search search-icon"
+          ></i>
+        </div>
+      </div>
+      <div class="layui-side layui-bg-black">
+        <div class="user-info">
+          <a class="userAvater" title="我的头像"><img src="img/face.jpg" /></a>
+          <p>你好！<span class="userName">HB</span>，欢迎登录</p>
+        </div>
+        <!-- 左侧导航区域 -->
+        <div class="layui-side-scroll" lay-filter="div-scroll">
+          <!--lay-filter：事件过滤器。一般是用于监听特定的自定义事件。可以把它看作是一个ID选择器-->
+          <!--lay-shrink：展开子菜单时，是否收缩兄弟节点已展开的子菜单 （注：layui 2.2.6 开始新增）。空值（默认）不收缩兄弟菜单子菜单，all收缩全部兄弟菜单子菜单-->
+          <ul
+            class="layui-nav layui-nav-tree"
+            lay-filter="leftNav"
+            lay-shrink=""
+          >
+            <li class="layui-nav-item layui-this">
+              <a href="javascript:;" class="index-fixed"
+                ><i class="layui-icon" data-icon=""></i><cite>首页</cite></a
+              >
+            </li>
+            <li class="layui-nav-item layui-nav-itemed">
+              <a href="javascript:;">系统管理</a>
+              <dl class="layui-nav-child">
+                <dd>
+                  <a
+                    href="javascript:;"
+                    class="hb-tab-add"
+                    data-href="./SystemManage/AdminManage.html"
+                    data-id="1"
+                    >管理员管理</a
+                  >
+                </dd>
+                <dd>
+                  <a
+                    href="javascript:;"
+                    class="hb-tab-add"
+                    data-href="./SystemManage/UserManage.html"
+                    data-id="2"
+                    >用户管理</a
+                  >
+                </dd>
+                <dd>
+                  <a
+                    href="javascript:;"
+                    class="hb-tab-add"
+                    data-href="./SystemManage/RoleManage.html"
+                    data-id="3"
+                    >角色管理</a
+                  >
+                </dd>
+              </dl>
+            </li>
+            <li class="layui-nav-item">
+              <a href="javascript:;">曲谱管理</a>
+              <dl class="layui-nav-child">
+                <dd>
+                  <a
+                    href="javascript:;"
+                    class="hb-tab-add"
+                    data-href="./OpernManage/FolkRhymeOpern.html"
+                    data-id="4"
+                    >民谣曲谱</a
+                  >
+                </dd>
+                <dd>
+                  <a
+                    href="javascript:;"
+                    class="hb-tab-add"
+                    data-href="./OpernManage/RockAndRollOpern.html"
+                    data-id="5"
+                    >摇滚曲谱</a
+                  >
+                </dd>
+                <dd>
+                  <a
+                    href="javascript:;"
+                    class="hb-tab-add"
+                    data-href="./OpernManage/ClassicOpern.html"
+                    data-id="6"
+                    >古典曲谱</a
+                  >
+                </dd>
+              </dl>
+            </li>
+            <li class="layui-nav-item">
+              <a
+                href=""
+                class="hb-tab-add"
+                data-href="./OtherManage/Metronome.html"
+                data-id="7"
+                >节拍器</a
+              >
+            </li>
+            <li class="layui-nav-item">
+              <a
+                href=""
+                class="hb-tab-add"
+                data-href="./OtherManage/StudyCorner.html"
+                data-id="8"
+                >学习天地</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="layui-body">
+        <!-- 内容主题区域 -->
+        <div
+          class="layui-tab index-tab"
+          lay-filter="index-tab-filter"
+          lay-allowClose="true"
+        >
+          <ul class="layui-tab-title">
+            <li class="tab-home layui-this" lay-id="0">
+              <i class="layui-icon layui-icon-home"></i>首页
+            </li>
+          </ul>
+          <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+              <!-- 源码地址 -->
+              <div>
+                <blockquote class="layui-elem-quote">
+                  源码地址：<br /><br />
+                  <a target="_blank" href="https://www.baidu.com"
+                    ><button class="layui-btn layui-btn-danger layui-btn-sm">
+                      github
+                    </button></a
+                  >
+                </blockquote>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="layui-footer">
+        <!--底部固定区域-->
+        © hb.com - 底部固定区域
+      </div>
+    </div>
+    <script src="./js/plugins/layui/layui.js" charset="utf-8"></script>
+    <script src="./js/jquery-3.5.1.min.js"></script>
+    <script src="./js/index.js"></script>
+    <script src="./js/plugins/jquery.nicescroll-3.7.6/js/jquery.nicescroll.min.js"></script>
+    <script>
+      $(function () {
+        layui
+          .config({
+            base: "./js/plugins/MyLayuiModules/",
+          })
+          .extend({
+            // 设定模块别名
+            hbTab: "hbTab",
+            hbTheme: "hbTheme",
+            hbRightClickTab: "hbRightClickTab"
+          });
+
+        // 注意引入layui组件时传入的是一个包含组件名的数组类型数据（之前未加[]，所以效果怎么都出不来）
+        // 搜索框的样式是form组件自动渲染的，框内初始文本是首个option标签中的内容
+        layui.use(["element", "form", "hbTab", "hbTheme", "hbRightClickTab"], function () {
+          var element = layui.element;
+          var form = layui.form;
+          var hbTab = layui.hbTab;
+          var hbTheme = layui.hbTheme;
+          var hbRightClickTab = layui.hbRightClickTab;
+
+          // 监听导航菜单的点击
+          element.on("nav(leftNav)", function (elem) {
+            // 每次点击菜单要重置滚动条，不然会出现展开菜单该出现滚动条时不会出现滚动条的问题
+            $(".layui-side-scroll").getNiceScroll().resize();
+          });
+
+          // 监听选项卡删除
+          element.on("tabDelete(index-tab-filter)", function (data) {
+            var lay_id = $(this).parent().attr("lay-id");
+            $("#nav-tab-id-"+lay_id).removeAttr("tab-layid");
+          });
+
+          // 初始化自定义Tab组件
+          hbTab.init();
+          // 初始化主题组件
+          hbTheme.init();
+          // 初始化右键Tab上下文组件
+          hbRightClickTab.init();
+
+          $(".index-fixed").click(function() {
+            element.tabChange("index-tab-filter", "0");
+          })
+        });
+      });
+
+      // 发现注册滚动条功能放在$(document).ready()中是可以的，而放在$(function(){...})是不行的
+      $(document).ready(function () {
+        $(".layui-side-scroll").niceScroll({
+          cursorborder: "",
+          cursorcolor: "rgba(248,248,250,0.5)",
+          boxzoom: false,
+          enabletranslate3d: false,
+        });
+      });
+    </script>
+  </body>
+</html>

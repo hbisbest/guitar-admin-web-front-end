@@ -1,0 +1,27 @@
+/* 公共样式 */
+.main-body{
+    min-width: 320px;
+}
+
+.logo{
+    color: #ffffff;
+    float: left;
+    line-height: 60px;
+    font-size: 20px;
+    padding: 0px 25px;
+    text-align: center;
+    width: 150px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.hideMenu{ float:left; width:20px; height:20px; margin:15px 15px 0 0; font-size:17px; text-align:center; padding:5px 5px; color:#fff; }
+.hideMenu:hover{ color:#777; outline:0;transition:all .5s;-webkit-transition:all .5s;-moz-transition:all .5s;-o-transition:all .5s; }
+
+/*左侧用户头像*/
+.layui-nav{ background-color:inherit !important; }
+
+/*顶部右侧导航*/
+.top_menu{ position:absolute; right:0; background:none }
+
+.layui-nav-item a cite{ padding:0 5px; }
